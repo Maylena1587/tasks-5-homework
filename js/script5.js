@@ -182,6 +182,9 @@
 // console.log(mustang.price); // 4000
 class Car {
   // Write code under this line
+  static getSpecs(car) {
+    return `maxSpeed: ${car.maxSpeed}, speed: ${car.speed}, isOn: ${car.isOn}, distance: ${car.distance}, price: ${car._price}`;
+  }
   constructor({ speed = 0, price, maxSpeed, isOn = false, distance = 0 }) {
     this.speed = speed;
     this._price = price;
@@ -189,9 +192,7 @@ class Car {
     this.isOn = isOn;
     this.distance = distance;
   }
-  static getSpecs(car) {
-    return `maxSpeed: ${car.maxSpeed}, speed: ${car.speed}, isOn: ${car.isOn}, distance: ${car.distance}, price: ${car._price}`;
-  }
+
   get price() {
     return this._price;
   }
@@ -207,15 +208,23 @@ class Car {
   }
   accelerate(value) {
     let receivedSpeed = this.speed + value;
-    if (receivedSpeed <= this.maxSpeed) {
-      this.speed = receivedSpeed;
-    }
+    return receivedSpeed <= this.maxSpeed
+      ? (this.speed = receivedSpeed)
+      : (this.speed = this.maxSpeed);
+    // if (receivedSpeed <= this.maxSpeed) {
+    //   this.speed = receivedSpeed;
+    // } else {
+    //   this.speed = this.maxSpeed;
+    // }
   }
   decelerate(value) {
     let receivedSpeed = this.speed - value;
-    if (receivedSpeed > 0) {
-      this.speed = receivedSpeed;
-    }
+    return receivedSpeed > 0 ? (this.speed = receivedSpeed) : (this.speed = 0);
+    // if (receivedSpeed > 0) {
+    //   this.speed = receivedSpeed;
+    // } else {
+    //   this.speed = 0;
+    // }
   }
   drive(hours) {
     if (this.isOn) {
